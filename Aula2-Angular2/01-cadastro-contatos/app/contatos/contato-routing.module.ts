@@ -12,12 +12,19 @@ const contatoRoutes: Routes = [
 {
     path:'contato/save',
     component:ContatoDetalhesComponent
+},
+{
+    path:'contato/save/:id',
+    component: ContatoDetalhesComponent
 }
 ]
 
 @NgModule({
     imports:[
         RouterModule.forChild(contatoRoutes)
+    ],
+    exports:[
+        RouterModule
     ]
 })
 
