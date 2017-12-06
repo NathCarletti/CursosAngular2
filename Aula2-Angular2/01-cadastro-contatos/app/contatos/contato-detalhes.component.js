@@ -38,6 +38,21 @@ let ContatoDetalhesComponent = class ContatoDetalhesComponent {
             }
         });
     }
+    //Ao inves de usar [ngClass]={...} no html
+    getFormGroupClass(isValid, isPristine) {
+        return {
+            'form-group': true,
+            'has-danger': (!isValid && !isPristine),
+            'has-success': (isValid && !isPristine)
+        };
+    }
+    getFormControlClass(isValid, isPristine) {
+        return {
+            'form-control': true,
+            'form-control-danger': (!isValid && !isPristine),
+            'form-control-success': (isValid && !isPristine)
+        };
+    }
     teste() {
         console.log();
     }
@@ -46,7 +61,15 @@ ContatoDetalhesComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'contato-detalhe',
-        templateUrl: 'contato-detalhe.component.html'
+        templateUrl: 'contato-detalhe.component.html',
+        styles: [`
+            .ng-valid[required]{
+                border:1px solid green;
+            }
+            .ng-invalid[required]{
+                border:1px solid red;
+            }
+    `],
     }),
     __metadata("design:paramtypes", [contato_service_1.ContatoService,
         router_1.ActivatedRoute,
