@@ -17,11 +17,15 @@ let ContatoService = class ContatoService {
     getContatos() {
         return Promise.resolve(contatos_mock_1.CONTATOS);
     }
+    getContatoPorId(id) {
+        return this.getContatos()
+            .then((contato) => contato.find((contato) => contato.id === id));
+    }
     /*devolve a promise devagar*/
     getContatosSlowly() {
         return new Promise((resolve, reject) => {
             //chama a propria função no momento adequado
-            setTimeout(resolve, 3000);
+            setTimeout(resolve, 2000);
             //mesmo de mandar return this.getContatos()
         }).then(() => {
             console.log('primeiro then');
@@ -30,6 +34,12 @@ let ContatoService = class ContatoService {
             .then((param) => {
             console.log('segundo then');
             console.log(param);
+            return new Promise((resolve2, reject2) => {
+                setTimeout(() => {
+                    console.log('continua dps de 2 segundos');
+                    resolve2();
+                }, 2000);
+            });
         })
             .then(() => {
             console.log('terceiro then');

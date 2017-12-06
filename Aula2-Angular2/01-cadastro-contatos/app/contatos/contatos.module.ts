@@ -1,4 +1,4 @@
-import { ContatoDetalhesComponent } from './contato.detalhes.component';
+import { ContatoDetalhesComponent } from './contato-detalhes.component';
 import { CommonModule } from '@angular/common';
 import { ContatosListaComponent } from './contatos-lista.component';
 import { NgModule } from '@angular/core';

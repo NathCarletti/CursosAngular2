@@ -9,7 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const router_1 = require("@angular/router");
 const contatos_lista_component_1 = require("./contatos-lista.component");
-const contato_detalhes_component_1 = require("./contato.detalhes.component");
+const contato_detalhes_component_1 = require("./contato-detalhes.component");
 const contatoRoutes = [
     {
         path: 'contato',
