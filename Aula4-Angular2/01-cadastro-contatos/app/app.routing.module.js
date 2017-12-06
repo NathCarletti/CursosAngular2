@@ -10,21 +10,17 @@ const router_1 = require("@angular/router");
 const core_1 = require("@angular/core");
 const appRoutes = [
     {
-        path: '',
-        redirectTo: '/contato',
-        pathMatch: 'full'
+        path: "",
+        redirectTo: "/contato",
+        pathMatch: "full"
     }
 ];
 let AppRoutingModule = class AppRoutingModule {
 };
 AppRoutingModule = __decorate([
     core_1.NgModule({
-        imports: [
-            router_1.RouterModule.forRoot(appRoutes)
-        ],
-        exports: [
-            router_1.RouterModule
-        ]
+        imports: [router_1.RouterModule.forRoot(appRoutes)],
+        exports: [router_1.RouterModule]
     })
 ], AppRoutingModule);
 exports.AppRoutingModule = AppRoutingModule;

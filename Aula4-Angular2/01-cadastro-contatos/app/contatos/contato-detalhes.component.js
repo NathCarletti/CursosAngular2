@@ -26,7 +26,7 @@ let ContatoDetalhesComponent = class ContatoDetalhesComponent {
         /**one way data-binding: pega um contato da classe
          *e levando para o template, caso o valor seja alterado
          nao interfere na classe*/
-        this.contato = new contato_model_1.Contato(0, '', '', '');
+        this.contato = new contato_model_1.Contato('', '', '');
         //percorre parametro da rota
         this.route.params.forEach((params) => {
             let id = +params['id'];
@@ -57,13 +57,16 @@ let ContatoDetalhesComponent = class ContatoDetalhesComponent {
         };
     }
     onSubmit() {
+        let promise;
         console.log('novo: ', this.isNew);
         if (this.isNew) {
             console.log('cadastra contato');
+            this.contatosService.create(this.contato);
         }
         else {
             console.log('altera contato existente');
         }
+        promise.then(contato => this.location.back());
     }
 };
 ContatoDetalhesComponent = __decorate([

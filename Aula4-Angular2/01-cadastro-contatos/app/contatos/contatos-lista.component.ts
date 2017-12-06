@@ -33,6 +33,8 @@ export class ContatosListaComponent implements OnInit{
             //possui sintaxe mais curta q uma funçao normal do js
             //nao faz bind para o proprio this<<arrowfunctions>>
             this.contatos = contatos;
-        }).catch(err=>console.log(err));
+        }).catch(err=>{
+            console.log('Aconteceu um erro: ', err);
+        });
     }
 }

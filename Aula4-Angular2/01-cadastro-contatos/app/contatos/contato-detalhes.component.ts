@@ -38,7 +38,7 @@ export class ContatoDetalhesComponent implements OnInit{
         /**one way data-binding: pega um contato da classe
          *e levando para o template, caso o valor seja alterado
          nao interfere na classe*/ 
-        this.contato = new Contato(0,'','','');
+        this.contato = new Contato('','','');
        //percorre parametro da rota
         this.route.params.forEach((params:Params)=>{
             let id:number= +params['id'];
@@ -75,12 +75,17 @@ export class ContatoDetalhesComponent implements OnInit{
     }
 
     onSubmit():void{
+        let promise;
+
         console.log('novo: ',this.isNew);
         if(this.isNew){
             console.log('cadastra contato');
+            this.contatosService.create(this.contato);
         }else{
+            
             console.log('altera contato existente');
         }
+        promise.then(contato=> this.location.back());
     }
 
     /*teste():void{
