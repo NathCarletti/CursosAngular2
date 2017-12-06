@@ -19,6 +19,7 @@ let ContatoDetalhesComponent = class ContatoDetalhesComponent {
         this.contatosService = contatosService;
         this.route = route;
         this.location = location;
+        this.isNew = true;
     }
     ngOnInit() {
         console.log('oninit');
@@ -26,10 +27,12 @@ let ContatoDetalhesComponent = class ContatoDetalhesComponent {
          *e levando para o template, caso o valor seja alterado
          nao interfere na classe*/
         this.contato = new contato_model_1.Contato(0, '', '', '');
+        //percorre parametro da rota
         this.route.params.forEach((params) => {
             let id = +params['id'];
             console.log('id');
             if (id) {
+                this.isNew = false;
                 this.contatosService.getContatoPorId(id)
                     .then((contato) => {
                     console.log(contato);
@@ -53,8 +56,14 @@ let ContatoDetalhesComponent = class ContatoDetalhesComponent {
             'form-control-success': (isValid && !isPristine)
         };
     }
-    teste() {
-        console.log();
+    onSubmit() {
+        console.log('novo: ', this.isNew);
+        if (this.isNew) {
+            console.log('cadastra contato');
+        }
+        else {
+            console.log('altera contato existente');
+        }
     }
 };
 ContatoDetalhesComponent = __decorate([

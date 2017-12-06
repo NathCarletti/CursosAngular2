@@ -2,8 +2,8 @@
     <h2>
         Salvar contato
     </h2>
-    <form #contatoForm="ngForm">
-
+    <form (ngSubmit)="onSubmit()" #contatoForm="ngForm" novalidate>
+    <!--coloca em parenteses para ele escutar-->
         <div [ngClass] ="getFormGroupClass(nome.valid, nome.pristine)">
             <label for="nome" class="form-control-label">Nome: </label>
              <!--[ngClass] ="{'form-group':true, 'has-danger':(!nome.valid && !nome.pristine), 'has-succsess': (nome.valid && nome.pristine)}"
@@ -41,7 +41,7 @@
         </div>  
         <button type="submit" class="btn btn-success" [disabled]="!contatoForm.form.valid">Salvar</button> 
         <a  class="btn btn-secondary" routerLink="/">Voltar</a>
-        <button (click)="teste()" class="btn btn-warning">Log</button> 
+      <!--atualizado para onSubmit  <button (click)="teste()" class="btn btn-warning">Log</button> -->
         
         
     </form>

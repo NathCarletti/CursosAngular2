@@ -25,6 +25,7 @@ import { ContatoService } from './contato-service';
 export class ContatoDetalhesComponent implements OnInit{
     
     contato:Contato;
+    private isNew :boolean = true;
 
     constructor(
         private contatosService: ContatoService,
@@ -38,10 +39,13 @@ export class ContatoDetalhesComponent implements OnInit{
          *e levando para o template, caso o valor seja alterado
          nao interfere na classe*/ 
         this.contato = new Contato(0,'','','');
+       //percorre parametro da rota
         this.route.params.forEach((params:Params)=>{
             let id:number= +params['id'];
             console.log('id');
             if(id){
+                this.isNew=false;
+
                 this.contatosService.getContatoPorId(id)
                 .then((contato:Contato)=>{
                     console.log(contato);
@@ -70,7 +74,16 @@ export class ContatoDetalhesComponent implements OnInit{
         };
     }
 
-    teste():void{
-        console.log();
+    onSubmit():void{
+        console.log('novo: ',this.isNew);
+        if(this.isNew){
+            console.log('cadastra contato');
+        }else{
+            console.log('altera contato existente');
+        }
     }
+
+    /*teste():void{
+        console.log();
+    } teste do botao log, atualizado para o onSubmit*/
 }
