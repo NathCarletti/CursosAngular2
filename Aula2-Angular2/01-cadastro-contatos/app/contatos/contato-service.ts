@@ -18,7 +18,6 @@ export class ContatoService{
     getContatoPorId(id:number): Promise<Contato>{
         return  this.getContatos()
         .then((contato:Contato[])=>contato.find((contato)=>contato.id === id));
-        
     }
 
    

@@ -2,21 +2,33 @@
     <h2>
         Salvar contato
     </h2>
-    <form>
+    <form #contatoForm="ngForm">
         <div class="form-group">
             <label for="nome">Nome: </label>
-            <input type="text" class="form-control" placeholder="Insira o nome">
+            <input type="text" class="form-control" placeholder="Insira o nome" 
+            name="nome" required [(ngModel)]="contato.nome">
+            <!--value="{{contato.nome}}
+            ou
+            [ngModel]="contato.nome" 
+            (ngModelChange)="contato.nome = $event"-->
         </div>
         <div class="form-group">
                 <label for="nome">E-mail: </label>
-                <input type="email" class="form-control" placeholder="Insira o e-mail">
+                <input type="email" class="form-control" placeholder="Insira o e-mail" 
+                name = "email" required 
+                [(ngModel)]="contato.email" ><!--[value]=contato.email-->
         </div>
         <div class="form-group">
                 <label for="nome">Telefone: </label>
-                <input type="text" class="form-control" placeholder="Insira o telefone">
+                <input type="text" class="form-control" placeholder="Insira o telefone"
+                name = "telefone" required
+                [(ngModel)]="contato.telefone" >
         </div>  
-        <button type="submit" class="btn btn-success">Salvar</button> 
-        <a class="btn btn-secondary" routerLink="/">Voltar</a>
+        <button type="submit" class="btn btn-success" [disabled]="!contatoForm.form.valid">Salvar</button> 
+        <a  class="btn btn-secondary" routerLink="/">Voltar</a>
+        <button (click)="teste()" class="btn btn-warning">Log</button> 
+        
+        
     </form>
 
 </div>

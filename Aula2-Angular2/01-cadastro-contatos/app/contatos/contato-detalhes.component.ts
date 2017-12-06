@@ -13,6 +13,8 @@ import { ContatoService } from './contato-service';
 
 export class ContatoDetalhesComponent implements OnInit{
     
+    contato:Contato;
+
     constructor(
         private contatosService: ContatoService,
         private route: ActivatedRoute,
@@ -21,13 +23,26 @@ export class ContatoDetalhesComponent implements OnInit{
     
     ngOnInit(): void{
         console.log('oninit');
+        /**one way data-binding: pega um contato da classe
+         *e levando para o template, caso o valor seja alterado
+         nao interfere na classe*/ 
+        this.contato = new Contato(0,'','','');
         this.route.params.forEach((params:Params)=>{
-        let id:number= +params['id'];
-        console.log('id');
-        this.contatosService.getContatoPorId(id)
-            .then((contato:Contato)=>{
-                console.log(contato);
-            })
-        });       
+            let id:number= +params['id'];
+            console.log('id');
+            if(id){
+                this.contatosService.getContatoPorId(id)
+                .then((contato:Contato)=>{
+                    console.log(contato);
+                    this.contato = contato;
+                });
+            }
+        }); 
+        
+              
+    }
+
+    teste():void{
+        console.log();
     }
 }
