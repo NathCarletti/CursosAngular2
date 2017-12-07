@@ -10,11 +10,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const contato_service_1 = require("./contato-service");
-const Rx_1 = require("rxjs/Rx");
+const Subject_1 = require("rxjs/Subject");
 const Observable_1 = require("rxjs/Observable");
 const core_1 = require("@angular/core");
+const router_1 = require("@angular/router");
 let ContatoBuscaComponent = class ContatoBuscaComponent {
-    constructor(contatoService) {
+    constructor(router, contatoService) {
+        this.router = router;
         this.contatoService = contatoService;
         /**
          * outro observable,
@@ -23,7 +25,7 @@ let ContatoBuscaComponent = class ContatoBuscaComponent {
          * pq ele gerencia esse fluxo
          * entra na fila
          */
-        this.termosDaBusca = new Rx_1.Subject();
+        this.termosDaBusca = new Subject_1.Subject();
     }
     ngOnInit() {
         /**
@@ -33,11 +35,15 @@ let ContatoBuscaComponent = class ContatoBuscaComponent {
          * verifica se vai mesmo fazer a chamada ao servidor
          */
         this.contatos = this.termosDaBusca
-            .debounceTime(300) //300ms pra emitir novo evento
+            .debounceTime(1200) //300ms pra emitir novo evento
+            .distinctUntilChanged() //ignore se o prox termo de busca for igual ao anterior
             .switchMap(term => {
             console.log('Fez a busca', term);
             return term ? this.contatoService.search(term) :
                 Observable_1.Observable.of([]);
+        }).catch(err => {
+            console.log(err);
+            return Observable_1.Observable.of([]);
         });
         /**inteligente o bastante para
          * cancelar os observables de pesquisa anteriores,
@@ -51,14 +57,24 @@ let ContatoBuscaComponent = class ContatoBuscaComponent {
         console.log(termo);
         this.termosDaBusca.next(termo);
     }
+    verDetalheContato(contato) {
+        let link = ["contato/save/", contato.id];
+        this.router.navigate(link);
+    }
 };
 ContatoBuscaComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'contato-busca',
-        templateUrl: 'contato-busca.component.html'
+        templateUrl: 'contato-busca.component.html',
+        styles: [
+            `.cursor-pointer:hover{
+      cursor:pointer;
+    }`
+        ]
     }),
-    __metadata("design:paramtypes", [contato_service_1.ContatoService])
+    __metadata("design:paramtypes", [router_1.Router,
+        contato_service_1.ContatoService])
 ], ContatoBuscaComponent);
 exports.ContatoBuscaComponent = ContatoBuscaComponent;
 //# sourceMappingURL=contato-busca.component.js.map

@@ -1,13 +1,19 @@
 import { ContatoService } from './contato-service';
-import { Subject } from 'rxjs/Rx';
+import { Subject } from 'rxjs/Subject';
 import { Contato } from './contato.model';
 import { Observable } from 'rxjs/Observable';
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   moduleId: module.id,
   selector: 'contato-busca',
-  templateUrl: 'contato-busca.component.html'
+  templateUrl: 'contato-busca.component.html',
+  styles:[
+    `.cursor-pointer:hover{
+      cursor:pointer;
+    }`
+  ]
 })
 export class ContatoBuscaComponent implements OnInit {
   contatos: Observable<Contato[]>;
@@ -18,9 +24,10 @@ export class ContatoBuscaComponent implements OnInit {
    * pq ele gerencia esse fluxo
    * entra na fila
    */ 
-  private termosDaBusca: Subject<string> = new Subject<string>();
+  private termosDaBusca: Subject<any>= new Subject<any>();
 
   constructor(
+    private router : Router,
       private contatoService: ContatoService
   ) {}
 
@@ -32,11 +39,15 @@ export class ContatoBuscaComponent implements OnInit {
        * verifica se vai mesmo fazer a chamada ao servidor
        */
       this.contatos = this.termosDaBusca
-      .debounceTime(300)//300ms pra emitir novo evento
-      .switchMap(term=>{
+      .debounceTime(1200)//300ms pra emitir novo evento
+      .distinctUntilChanged() //ignore se o prox termo de busca for igual ao anterior
+      .switchMap(term => {
           console.log('Fez a busca', term);
         return term ? this.contatoService.search(term) :
-        Observable.of<Contato[]>([])
+        Observable.of<Contato[]>([]);
+  }).catch(err=>{
+    console.log(err);
+    return Observable.of<Contato[]>([]);
   });
   /**inteligente o bastante para 
    * cancelar os observables de pesquisa anteriores,
@@ -50,5 +61,10 @@ export class ContatoBuscaComponent implements OnInit {
   search(termo: string): void {
     console.log(termo);
     this.termosDaBusca.next(termo);
+  }
+
+  verDetalheContato(contato:Contato):void{
+    let link  = ["contato/save/", contato.id];
+    this.router.navigate(link);
   }
 }

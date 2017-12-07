@@ -103,8 +103,7 @@ export class ContatoService {
       });
   }
 
-  search(term:string):Observable<Contato[]>
-{
+  search(term:string):Observable<Contato[]>{
   return this.http
   .get(`${this.contatosUrl}/?nome=${term}`)
   //converter observable em contatos[]
