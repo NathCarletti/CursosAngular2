@@ -6,6 +6,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+require("./util/rxjs-extensions");
 const dialog_service_1 = require("./contatos/dialog.service");
 const core_1 = require("@angular/core");
 const http_1 = require("@angular/http");

@@ -1,3 +1,5 @@
+import './util/rxjs-extensions';
+
 import { DialogService } from './contatos/dialog.service';
 import {NgModule} from '@angular/core';
 import { HttpModule } from '@angular/http';
