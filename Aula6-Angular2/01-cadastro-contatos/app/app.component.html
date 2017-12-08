@@ -1,0 +1,24 @@
+<nav class="navbar navbar-light bg-faded">
+        <a class="navbar-brand" routerLink="/">Contatos</a>
+       
+          <ul class="nav navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" routerLink="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <!--rota que foi definida para cadastro de contatos-->
+              <a class="nav-link" routerLink="/contato/save">Novo</a>
+            </li>
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control" type="text" placeholder="Search" 
+            name="busca"
+            [(ngModel)] = "termo">
+            
+          </form>
+      </nav>
+
+      <router-outlet></router-outlet>
+
+     <!-- <contato-busca [busca]="termo" (buscaChange)="termo=$event"></contato-busca> mais simples\/-->
+     <contato-busca [(busca)]="termo"></contato-busca> 

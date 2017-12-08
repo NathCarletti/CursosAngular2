@@ -1,0 +1,42 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-20 col-sm-20 col-md-20 col-lg-20 col-xl-20"></div>
+        <h2>Meus contatos</h2>
+
+        <div [ngClass]="classesCss" role="alert" *ngIf="mensagem">
+            <span [ngSwitch]="mensagem.tipo">
+            <strong *ngSwitchCase="danger">Erro!</strong>    
+            <strong *ngSwitchCase="warning">Alerta!</strong>  
+            <strong *ngSwitchCase="success">Success!</strong>  
+            <strong *ngSwitchDefault>Informação!</strong> 
+            </span>
+            {{mensagem.texto}}
+        </div>
+
+        <a routerLink="/contato/save" class="btn btn-success">Add</a>
+
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Telefone</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody> 
+            <tr *ngIf="contatos.length ==0">
+                <td colspan="4" align="center">Nenhum registro encontrado! </td>    
+            </tr>                            <!--declara rota para contato id-->
+                <tr *ngFor="let c of contatos"[routerLink]="['/contato/save', c.id]">
+                    <td>{{c.nome}}</td>
+                    <td>{{c.email}}</td>
+                    <td>{{c.telefone}}</td>
+                    <td><button class="btn btn-danger"(click)="onDelete(c);$event.stopPropagation()">Deletar</button></td>
+                </tr><!--(routerlink me direciona pro contato/service. Usando stopProp nao propaga o evento de click pro botao-->
+            </tbody>
+        </table>
+    
+    </div>
+
+</div>
