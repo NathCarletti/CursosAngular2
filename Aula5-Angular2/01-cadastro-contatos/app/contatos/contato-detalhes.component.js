@@ -91,9 +91,9 @@ ContatoDetalhesComponent = __decorate([
             }
     `],
     }),
-    __metadata("design:paramtypes", [contato_service_1.ContatoService,
-        router_1.ActivatedRoute,
+    __metadata("design:paramtypes", [typeof (_a = typeof contato_service_1.ContatoService !== "undefined" && contato_service_1.ContatoService) === "function" && _a || Object, router_1.ActivatedRoute,
         common_1.Location])
 ], ContatoDetalhesComponent);
 exports.ContatoDetalhesComponent = ContatoDetalhesComponent;
+var _a;
 //# sourceMappingURL=contato-detalhes.component.js.map

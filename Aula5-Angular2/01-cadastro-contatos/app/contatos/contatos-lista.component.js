@@ -105,8 +105,8 @@ ContatosListaComponent = __decorate([
          * providers:[ContatoService]
          */
     }),
-    __metadata("design:paramtypes", [contato_service_1.ContatoService,
-        dialog_service_1.DialogService])
+    __metadata("design:paramtypes", [typeof (_a = typeof contato_service_1.ContatoService !== "undefined" && contato_service_1.ContatoService) === "function" && _a || Object, dialog_service_1.DialogService])
 ], ContatosListaComponent);
 exports.ContatosListaComponent = ContatosListaComponent;
+var _a;
 //# sourceMappingURL=contatos-lista.component.js.map

@@ -2,7 +2,7 @@ import { ContatoService } from './contato-service';
 import { Subject } from 'rxjs/Subject';
 import { Contato } from './contato.model';
 import { Observable } from 'rxjs/Observable';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Input, Output, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
 import {Router} from '@angular/router';
 
 @Component({
@@ -15,16 +15,22 @@ import {Router} from '@angular/router';
     }`
   ]
 })
-export class ContatoBuscaComponent implements OnInit {
+export class ContatoBuscaComponent implements OnInit, OnChanges {
+ 
+  @Input() busca: string;
+  @Output() buscaChange: EventEmitter<string> = new EventEmitter<string>();
+  //in inOutput === [in]="" (inOutput)="" ou apenas [(in)]="" 
+  //POREM tem q ser Change x e xChange, obrigtoriamente
   contatos: Observable<Contato[]>;
-  /**
+  private termosDaBusca: Subject<any>= new Subject<any>();
+ /**
    * outro observable, 
    * toda vez que o usuario digita busca, 
    * adiciona a busca no subject, 
    * pq ele gerencia esse fluxo
    * entra na fila
    */ 
-  private termosDaBusca: Subject<any>= new Subject<any>();
+
 
   constructor(
     private router : Router,
@@ -57,14 +63,27 @@ export class ContatoBuscaComponent implements OnInit {
           console.log('retornou do servidor: ',contatos);
       })
   }
+/**
+ * ciclos de vida:
+ * onChanges ouve todas as alterações dos campos marcados
+ * com Input
+ * @param changes 
+ */
+  ngOnChanges(changes: SimpleChanges):void{
+    let busca: SimpleChange = changes['busca'];
+    console.log(changes);
+    this.search(busca.currentValue)
+  }
 
   search(termo: string): void {
     console.log(termo);
     this.termosDaBusca.next(termo);
+    this.buscaChange.emit(termo);
   }
 
   verDetalheContato(contato:Contato):void{
     let link  = ["contato/save/", contato.id];
     this.router.navigate(link);
+    this.buscaChange.emit('');
   }
 }

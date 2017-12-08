@@ -15,16 +15,17 @@ const Observable_1 = require("rxjs/Observable");
 const core_1 = require("@angular/core");
 const router_1 = require("@angular/router");
 let ContatoBuscaComponent = class ContatoBuscaComponent {
+    /**
+      * outro observable,
+      * toda vez que o usuario digita busca,
+      * adiciona a busca no subject,
+      * pq ele gerencia esse fluxo
+      * entra na fila
+      */
     constructor(router, contatoService) {
         this.router = router;
         this.contatoService = contatoService;
-        /**
-         * outro observable,
-         * toda vez que o usuario digita busca,
-         * adiciona a busca no subject,
-         * pq ele gerencia esse fluxo
-         * entra na fila
-         */
+        this.buscaChange = new core_1.EventEmitter();
         this.termosDaBusca = new Subject_1.Subject();
     }
     ngOnInit() {
@@ -53,15 +54,36 @@ let ContatoBuscaComponent = class ContatoBuscaComponent {
             console.log('retornou do servidor: ', contatos);
         });
     }
+    /**
+     * ciclos de vida:
+     * onChanges ouve todas as alterações dos campos marcados
+     * com Input
+     * @param changes
+     */
+    ngOnChanges(changes) {
+        let busca = changes['busca'];
+        console.log(changes);
+        this.search(busca.currentValue);
+    }
     search(termo) {
         console.log(termo);
         this.termosDaBusca.next(termo);
+        this.buscaChange.emit(termo);
     }
     verDetalheContato(contato) {
         let link = ["contato/save/", contato.id];
         this.router.navigate(link);
+        this.buscaChange.emit('');
     }
 };
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String)
+], ContatoBuscaComponent.prototype, "busca", void 0);
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", core_1.EventEmitter)
+], ContatoBuscaComponent.prototype, "buscaChange", void 0);
 ContatoBuscaComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
@@ -73,8 +95,8 @@ ContatoBuscaComponent = __decorate([
     }`
         ]
     }),
-    __metadata("design:paramtypes", [router_1.Router,
-        contato_service_1.ContatoService])
+    __metadata("design:paramtypes", [router_1.Router, typeof (_a = typeof contato_service_1.ContatoService !== "undefined" && contato_service_1.ContatoService) === "function" && _a || Object])
 ], ContatoBuscaComponent);
 exports.ContatoBuscaComponent = ContatoBuscaComponent;
+var _a;
 //# sourceMappingURL=contato-busca.component.js.map
